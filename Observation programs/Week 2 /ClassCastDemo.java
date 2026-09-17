@@ -1,4 +1,4 @@
-class ClassCastExample {
+class ClassCastDemo {
     public static void main(String[] args) {
 
         Object obj = "Hello";
