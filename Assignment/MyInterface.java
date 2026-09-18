@@ -4,7 +4,7 @@ interface Calculator {
     void add();
 }
 // interface 
-class MyCalculator implements Calculator {
+class MyInterface implements Calculator {
 
     public void add() {
         int a = 15;
@@ -13,7 +13,7 @@ class MyCalculator implements Calculator {
     }
 
     public static void main(String[] args) {
-        MyCalculator obj = new MyCalculator();
+        MyInterface obj = new MyInterface();
         obj.add();
     }
 }
