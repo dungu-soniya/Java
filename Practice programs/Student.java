@@ -5,7 +5,7 @@ class Student {
         name = n;
         age = a;
     }
-
+//parameter constructor 
     void display() {
         System.out.println("Name: " + name);
         System.out.println("Age: " + age);
