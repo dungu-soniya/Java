@@ -1,0 +1,11 @@
+public class StringIndexOutOfBounds {
+    public static void main(String[] args) {
+        String name = "Soniya";
+
+        try {
+            System.out.println(name.charAt(10));
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Invalid String index");
+        }
+    }
+}
