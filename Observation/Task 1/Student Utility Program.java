@@ -230,65 +230,49 @@ public class StudentUtilitySystem {
                 case 1:
                     obj.studentDetails(sc);
                     break;
-
                 case 2:
                     obj.evenOdd(sc);
                     break;
-
                 case 3:
                     obj.largest(sc);
                     break;
-
                 case 4:
                     obj.grade(sc);
                     break;
-
                 case 5:
                     obj.dayName(sc);
                     break;
-
                 case 6:
                     obj.multiplicationTable(sc);
                     break;
-
                 case 7:
                     obj.printNumbers(sc);
                     break;
-
                 case 8:
                     obj.naturalSum(sc);
                     break;
-
                 case 9:
                     obj.fibonacci(sc);
                     break;
-
                 case 10:
                     obj.factorial(sc);
                     break;
-
                 case 11:
                     obj.prime(sc);
                     break;
-
                 case 12:
                     obj.maximum(sc);
                     break;
-
                 case 13:
                     obj.circleArea(sc);
                     break;
-
                 case 14:
                     System.out.println("Thank you for using Student Utility System!");
                     break;
-
                 default:
                     System.out.println("Invalid Choice!");
             }
-
         } while (choice != 14);
-
         sc.close();
     }
 }
