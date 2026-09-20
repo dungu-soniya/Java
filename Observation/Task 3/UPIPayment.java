@@ -1,46 +1,105 @@
+interface PaymentService {
+    void pay(double amount) throws InvalidUPIException, InvalidAmountException, InsufficientBalanceException;
+    double checkBalance();
+}
+
+class InsufficientBalanceException extends Exception {
+    InsufficientBalanceException(String msg) {
+        super(msg);
+    }
+}
+
+class InvalidUPIException extends Exception {
+    InvalidUPIException(String msg) {
+        super(msg);
+    }
+}
+
+class InvalidAmountException extends Exception {
+    InvalidAmountException(String msg) {
+        super(msg);
+    }
+}
+
 class Wallet {
-    String name;
-    double balance;
+    private String userName, mobileNumber, upiId;
+    private double balance;
+
+    Wallet(String name, String mobile, String upi, double balance) {
+        userName = name;
+        mobileNumber = mobile;
+        upiId = upi;
+        this.balance = balance;
+    }
 
     void addMoney(double amount) {
-        balance = balance + amount;
-        System.out.println("Money added: Rs." + amount);
+        balance += amount;
     }
 
-    void makePayment(double amount) {
-        if (amount <= balance) {
-            balance = balance - amount;
-            System.out.println("Payment successful: Rs." + amount);
-        } else {
-            System.out.println("Insufficient balance");
-        }
+    double getBalance() {
+        return balance;
     }
 
-    void displayBalance() {
-        System.out.println("Name: " + name);
+    String getUpiId() {
+        return upiId;
+    }
+
+    void deduct(double amount) {
+        balance -= amount;
+    }
+
+    void displayWalletDetails() {
+        System.out.println("Name: " + userName);
+        System.out.println("Mobile: " + mobileNumber);
+        System.out.println("UPI ID: " + upiId);
         System.out.println("Balance: Rs." + balance);
     }
 }
 
-public class UPIPayment {
+class UPIPayment implements PaymentService {
+    private Wallet wallet;
+
+    UPIPayment(Wallet wallet) {
+        this.wallet = wallet;
+    }
+
+    public void pay(double amount) throws InvalidUPIException, InvalidAmountException, InsufficientBalanceException {
+        String upi = wallet.getUpiId();
+
+        if (!upi.contains("@") || upi.startsWith("@") || upi.endsWith("@"))
+            throw new InvalidUPIException("Invalid UPI ID");
+
+        if (amount <= 0)
+            throw new InvalidAmountException("Invalid payment amount");
+
+        if (amount > wallet.getBalance())
+            throw new InsufficientBalanceException("Insufficient balance");
+
+        wallet.deduct(amount);
+        System.out.println("Payment successful: Rs." + amount);
+    }
+
+    public double checkBalance() {
+        return wallet.getBalance();
+    }
+}
+
+public class UPIPaymentSystem {
     public static void main(String[] args) {
+        Wallet w = new Wallet("Soniya", "9876543210", "soniya@upi", 5000);
+        UPIPayment p = new UPIPayment(w);
 
-        Wallet w1 = new Wallet();
+        w.addMoney(1000);
+        w.displayWalletDetails();
 
-        w1.name = "Soniya";
-        w1.balance = 2000;
+        try {
+            p.pay(2000);
+        } catch (InvalidUPIException | InvalidAmountException | InsufficientBalanceException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println("Transaction completed");
+        }
 
-        System.out.println("===== UPI PAYMENT AND DIGITAL WALLET =====");
-
-        w1.displayBalance();
-
-        System.out.println("\nAdding Money:");
-        w1.addMoney(1000);
-
-        System.out.println("\nMaking Payment:");
-        w1.makePayment(500);
-
-        System.out.println("\nFinal Balance:");
-        w1.displayBalance();
+        System.out.println("Final Balance: Rs." + p.checkBalance());
     }
 }
