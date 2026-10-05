@@ -126,7 +126,7 @@ class ResultCard {
     }
 }
 
-public class ResultApplication {
+public class StudentResult {
 
     public static void main(String[] args) {
 
